@@ -13,5 +13,3 @@
 .pnp.*
 
 dist
-
-dbschema/edgeql-js
