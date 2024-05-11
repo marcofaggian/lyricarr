@@ -3,23 +3,24 @@ import { userInfo } from "os";
 import { exit } from "process";
 import fetchLyrics from "./fetchLyrics";
 import getFiles from "./getFiles";
+import logger from "./logger";
 import { appendFile, queue } from "./queue";
 
 export const basePath =
   process.env.NODE_ENV === "production" ? "/music" : "/Volumes/music";
 
 (async () => {
-  console.log(`Running with user: ${userInfo().username}`);
+  logger.info(`Running with user: ${userInfo().username}`);
 
   if (!existsSync(basePath)) {
-    console.error(`This path is not accessible: ${basePath}`);
+    logger.error(`This path is not accessible: ${basePath}`);
     exit(1);
   }
 
-  console.log(`Searching for music in ${basePath}`);
+  logger.info(`Searching for music in ${basePath}`);
   let files = await getFiles(basePath);
 
-  console.log(`Found ${files.length} files`);
+  logger.info(`Found ${files.length} files`);
 
   files = files.sort();
   for (const file of files) {
@@ -37,5 +38,5 @@ export const basePath =
   //   }
   // }
 
-  fetchLyrics(queue[Object.keys(queue)[0]]);
+  await fetchLyrics(queue[Object.keys(queue)[0]]);
 })();

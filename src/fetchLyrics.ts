@@ -1,23 +1,31 @@
-import { execSync } from "child_process";
+import { exec } from "child_process";
+import { promisify } from "util";
+import logger from "./logger";
 import { MusicFile } from "./queue";
+
+const asyncExec = promisify(exec);
 
 const buildCommand = (file: MusicFile) =>
   `glyrc lyrics --artist "${file.artist}" --album "${file.album}" --title "${file.title}" --write "${file.filePath}.lrc"`;
 
-export default function fetchLyrics(file: MusicFile) {
+export default async function fetchLyrics(file: MusicFile) {
   try {
-    execSync(buildCommand(file), {
+    logger.debug("Starting Glyrc");
+    const execResult = await asyncExec(buildCommand(file), {
       encoding: "utf-8",
     });
+    logger.debug({ execResult });
+
+    const { stderr, stdout } = execResult;
+    if (!!stderr || stdout.includes("Error")) return false;
 
     return true;
   } catch (error: any) {
-    console.log(
-      "Error writing lyrics",
-      error.status, // Might be 127 in your example.
-      error.message // Holds the message you typically want.
-      //   error.stderr, // Holds the stderr output. Use `.toString()`.
-      //   error.stdout // Holds the stdout output. Use `.toString()`.
+    logger.error(
+      {
+        error,
+      },
+      "Error writing lyrics"
     );
     return false;
   }

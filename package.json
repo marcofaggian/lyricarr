@@ -2,19 +2,21 @@
   "name": "@marcofaggian/lyricarr",
   "packageManager": "yarn@4.2.2",
   "scripts": {
-    "start": "ts-node src",
+    "start": "ts-node src | pino-pretty",
     "build": "tsc --outDir dist",
     "package": "docker build . -t marcofaggian/lyricarr",
-    "run:docker": "docker run -v /Volumes/music:/music marcofaggian/lyricarr"
+    "run:docker": "docker run -v /Volumes/music:/music marcofaggian/lyricarr | pino-pretty"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
     "@types/glob": "^8.1.0",
     "@types/node": "^20.12.11",
+    "pino-pretty": "^11.0.0",
     "ts-node": "^10.9.2",
     "typescript": "5.4.3"
   },
   "dependencies": {
-    "glob": "^10.3.14"
+    "glob": "^10.3.14",
+    "pino": "^9.0.0"
   }
 }
