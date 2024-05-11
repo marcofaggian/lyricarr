@@ -1,14 +1,14 @@
 import { exec } from "child_process";
 import { promisify } from "util";
 import logger from "./logger";
-import { MusicFile } from "./queue";
+import { SongInQueue } from "./queue";
 
 const asyncExec = promisify(exec);
 
-const buildCommand = (file: MusicFile) =>
+const buildCommand = (file: SongInQueue) =>
   `glyrc lyrics --artist "${file.artist}" --album "${file.album}" --title "${file.title}" --write "${file.filePath}.lrc"`;
 
-export default async function fetchLyrics(file: MusicFile) {
+export default async function fetchLyrics(file: SongInQueue) {
   try {
     logger.debug("Starting Glyrc");
     const execResult = await asyncExec(buildCommand(file), {
@@ -16,8 +16,12 @@ export default async function fetchLyrics(file: MusicFile) {
     });
     logger.debug({ execResult });
 
-    const { stderr, stdout } = execResult;
-    if (!!stderr || stdout.includes("Error")) return false;
+    const { stderr } = execResult;
+    if (!!stderr) {
+      if (stderr.includes("Writing data to"))
+        logger.error({ path: file.filePath }, "Permissions error");
+      return false;
+    }
 
     return true;
   } catch (error: any) {

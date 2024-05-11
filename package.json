@@ -5,9 +5,16 @@
     "start": "ts-node src | pino-pretty",
     "build": "tsc --outDir dist",
     "package": "docker build . -t marcofaggian/lyricarr",
-    "run:docker": "docker run -v /Volumes/music:/music marcofaggian/lyricarr | pino-pretty"
+    "run:docker": "docker run -v /Volumes/music:/music marcofaggian/lyricarr | pino-pretty",
+    "db:generate:client": "yarn run -B generate edgeql-js",
+    "db:generate:interfaces": "yarn run -B generate interfaces",
+    "db:migration:create": "edgedb migration create",
+    "db:migration:apply": "edgedb migrate",
+    "db:ui": "edgedb ui",
+    "db:clean": "edgedb database wipe"
   },
   "devDependencies": {
+    "@edgedb/generate": "^0.5.3",
     "@tsconfig/node20": "^20.1.4",
     "@types/glob": "^8.1.0",
     "@types/node": "^20.12.11",
@@ -16,6 +23,7 @@
     "typescript": "5.4.3"
   },
   "dependencies": {
+    "edgedb": "^1.5.6",
     "glob": "^10.3.14",
     "pino": "^9.0.0"
   }

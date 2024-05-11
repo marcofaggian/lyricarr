@@ -1,6 +1,6 @@
 import { basePath } from "./index";
 
-export interface MusicFile {
+export interface SongInQueue {
   filePath: string;
   artist: string;
   album: string;
@@ -10,10 +10,11 @@ export interface MusicFile {
   lyrics: boolean;
 }
 
-export const queue: { [key: string]: MusicFile } = {};
+export const queue: { [key: string]: SongInQueue } = {};
 
 export const appendFile = (path: string) => {
-  const [filePath, extension] = path.split(".");
+  const [extension, ...filePathArray] = path.split(".").reverse();
+  const filePath = filePathArray.join(".");
 
   if (queue[filePath]) {
     if (extension === "lrc") queue[filePath].lyrics = true;
@@ -38,5 +39,5 @@ export const appendFile = (path: string) => {
   };
 };
 
-export const markAsWithLyrics = (file: MusicFile) =>
+export const markAsWithLyrics = (file: SongInQueue) =>
   (queue[file.filePath].lyrics = true);
