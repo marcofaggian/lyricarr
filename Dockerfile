@@ -13,18 +13,7 @@ RUN yarn build
 ## Build vendor
 FROM node:lts-slim
 
-RUN apt-get update && apt-get install -y g++ gcc cmake pkg-config git curl libcurl3-dev sqlite3 libglib2.0-dev libsqlite3-dev
-
-WORKDIR /app/vendor
-RUN git clone https://github.com/sahib/glyr.git
-
-WORKDIR /app/vendor/glyr
-RUN mkdir build
-
-WORKDIR /app/vendor/glyr/build
-RUN cmake .. && make
-RUN ln -s /app/vendor/glyr/build/bin/glyrc /usr/bin/ 
-RUN apt-get -y purge g++ gcc cmake pkg-config git && apt-get clean && rm -rf /var/lib/apt
+RUN apt-get update && apt-get install -y glyrc && apt-get clean && rm -rf /var/lib/apt
 
 WORKDIR /app
 
