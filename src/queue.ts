@@ -14,7 +14,7 @@ export const queue: { [key: string]: SongInQueue } = {};
 
 export const appendFile = (path: string) => {
   const [extension, ...filePathArray] = path.split(".").reverse();
-  const filePath = filePathArray.join(".");
+  const filePath = filePathArray.reverse().join(".");
 
   if (queue[filePath]) {
     if (extension === "lrc") queue[filePath].lyrics = true;
@@ -30,7 +30,7 @@ export const appendFile = (path: string) => {
 
   queue[filePath] = {
     filePath: basePath + filePath,
-    artist: artist ?? albumOrArtist,
+    artist: artist ? artist : albumOrArtist,
     album: artist ? albumOrArtist : volumeOrAlbum,
     file,
     title,
