@@ -20,9 +20,14 @@ module default {
       constraint exclusive;
     };
 
-    multi albums := .<artist[is Album]; 
+    multi albums := .<artist[is Album];
+    albums_count := (
+      select count( (select .albums) )
+    );
     multi songs := .<artist[is Song];
-
+    songs_count := (
+      select count( (select .songs) )
+    );
     songs_with_lyrics_count := (
       select count( (select .songs filter .lyrics = true) )
     );
@@ -40,7 +45,10 @@ module default {
 
     required artist: Artist;
 
-    multi songs := .<album[is Song]; 
+    multi songs := .<album[is Song];
+    songs_count := (
+      select count( (select .songs) )
+    );
     songs_with_lyrics_count := (select count(
       (
         select .songs filter .lyrics = true
