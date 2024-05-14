@@ -1,0 +1,31 @@
+{
+  "name": "@lyricarr/backend",
+  "scripts": {
+    "dev": "ts-node src | pino-pretty",
+    "build": "tsc --outDir dist",
+    "package": "docker build . -t marcofaggian/lyricarr",
+    "run:docker": "docker run -v /Volumes/music:/music marcofaggian/lyricarr | pino-pretty",
+    "db:generate:client": "pnpify prisma generate",
+    "db:migration:apply": "pnpify prisma migrate dev",
+    "db:migration:apply:prod": "pnpify prisma migrate deploy",
+    "db:ui": "pnpify prisma studio",
+    "db:clean": "pnpify prisma migrate reset"
+  },
+  "devDependencies": {
+    "@edgedb/generate": "^0.5.3",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^20.12.11",
+    "@yarnpkg/pnpify": "^4.1.0",
+    "pino-pretty": "^11.0.0",
+    "prisma": "5.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "*"
+  },
+  "dependencies": {
+    "@prisma/client": "5.14.0",
+    "edgedb": "^1.5.6",
+    "glob": "^10.3.14",
+    "pino": "^9.0.0"
+  }
+}
