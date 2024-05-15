@@ -1,6 +1,22 @@
 {
-  "extends": "@tsconfig/node20/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_version": "20.1.0",
   "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    // strictness
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "lib": [
+      "es2023"
+    ],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "incremental": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"

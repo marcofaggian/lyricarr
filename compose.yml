@@ -1,0 +1,16 @@
+name: lyricarr
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=lyricarr
+      - POSTGRES_PASSWORD=lyricarr
+      - POSTGRES_DB=lyricarr
+    ports:
+      - 6500:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:

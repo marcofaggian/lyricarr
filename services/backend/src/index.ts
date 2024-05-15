@@ -3,8 +3,8 @@ import { existsSync } from "fs";
 import { userInfo } from "os";
 import { exit } from "process";
 import getFiles from "./getFiles";
+import { peristSong } from "./jobs/persistSong";
 import logger from "./logger";
-import { appendFile, persistAllQueue } from "./queue";
 
 const prisma = new PrismaClient();
 
@@ -24,17 +24,15 @@ const main = async () => {
 
   logger.info(`Searching for music in ${basePath}`);
   let files = await getFiles(basePath);
-
-  logger.info(`Persisting ${files.length} files`);
-
-  // Append files to queue
   files = files.sort();
+
   for (const file of files) {
-    appendFile(file.split(basePath)[1]);
+    const path = file.split(basePath)[1];
+    if (path) await peristSong.enqueue({ path });
   }
 
-  // Persist all queue
-  await persistAllQueue(prisma);
+  logger.info(`Persisting ${files.length} files`);
+  await peristSong.start();
 
   // await fetchLyrics(queue[Object.keys(queue)[0]]);
 };

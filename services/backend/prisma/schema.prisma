@@ -7,7 +7,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -22,6 +22,9 @@ model Song {
   lyrics    Boolean @default(false)
   artistId  String
   albumId   String
+
+  @@unique([filePath, artistId, albumId])
+  @@index([title, albumId, artistId])
 }
 
 model Artist {
@@ -38,4 +41,29 @@ model Album {
   artist   Artist @relation(fields: [artistId], references: [id])
   songs    Song[]
   artistId String
+}
+
+model QueueJob {
+  id          BigInt    @id @default(autoincrement()) @db.BigInt
+  queue       String
+  key         String?
+  cron        String?
+  payload     Json?
+  result      Json?
+  error       Json?
+  progress    Int       @default(0)
+  priority    Int       @default(0)
+  attempts    Int       @default(0)
+  maxAttempts Int?
+  runAt       DateTime  @default(now())
+  notBefore   DateTime?
+  finishedAt  DateTime?
+  processedAt DateTime?
+  failedAt    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([key, runAt])
+  @@index([queue, priority, runAt, finishedAt])
+  @@map("queue_jobs")
 }
