@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_version": "20.1.0",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    // strictness
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "lib": [
+      "es2023"
+    ],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "incremental": true
+  }
+}

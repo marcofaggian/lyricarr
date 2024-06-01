@@ -1,5 +1,6 @@
+import config from "config";
 import pino from "pino";
 
 export default pino({
-  level: "debug",
+  level: config.get("logging.level"),
 });

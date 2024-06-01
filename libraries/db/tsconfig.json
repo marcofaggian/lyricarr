@@ -2,6 +2,9 @@
   "extends": "@lyricarr/typescript/config/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
+    "sourceMap": true,
+    "declaration": true,
+    "allowJs": false,
     "baseUrl": "src",
     "paths": {
       "@/*": [
@@ -10,7 +13,7 @@
     }
   },
   "include": [
-    "src/**/*",
-    "test/**/*"
+    "src/client.ts",
+    "src/generated"
   ]
 }

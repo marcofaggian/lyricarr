@@ -1,0 +1,7 @@
+{
+  "logging": {
+    "level": "LOG_LEVEL"
+  },
+  "basePath": "BASE_PATH",
+  "instanceId": "INSTANCE_ID"
+}

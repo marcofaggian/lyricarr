@@ -1,0 +1,27 @@
+{
+  "name": "@lyricarr/db",
+  "packageManager": "yarn@4.2.2",
+  "main": "./dist/client.js",
+  "types": "./dist/client.d.ts",
+  "scripts": {
+    "db:generate:client": "pnpify prisma generate",
+    "db:migration:apply": "pnpify prisma migrate dev",
+    "db:migration:apply:prod": "pnpify prisma migrate deploy",
+    "db:ui": "pnpify prisma studio",
+    "db:reset": "pnpify prisma migrate reset",
+    "build": "yarn db:generate:client && tsc"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    ".prisma": "link:./src/generated/",
+    "@prisma/client": "*"
+  },
+  "devDependencies": {
+    "@lyricarr/typescript": "workspace:*",
+    "@yarnpkg/pnpify": "*",
+    "prisma": "^5.14.0",
+    "typescript": "*"
+  }
+}

@@ -3,9 +3,11 @@
   "packageManager": "yarn@4.2.2",
   "workspaces": [
     "services/**",
-    "apps/**"
+    "apps/**",
+    "libraries/**"
   ],
   "devDependencies": {
+    "@yarnpkg/pnpify": "4.1.0",
     "typescript": "5.4.3"
   }
 }

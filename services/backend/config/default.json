@@ -1,0 +1,5 @@
+{
+  "basePath": "/Volumes/music",
+  "logging": { "level": "debug" },
+  "instanceId": "dev"
+}

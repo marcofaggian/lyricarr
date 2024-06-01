@@ -1,2 +1,2 @@
-prisma/dev.db*
-src/db/generated
+node_modules
+test.xml
